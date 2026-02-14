@@ -7,14 +7,14 @@ This PHP package provides a `password_exposed` helper function, that uses the ha
 </p>
 
 <p align="center">
-    <a href="https://travis-ci.org/DivineOmega/password_exposed">
-        <img src="https://travis-ci.org/DivineOmega/password_exposed.svg?branch=master" alt="Build Status" />
+    <a href="https://travis-ci.org/Jord-JD/password_exposed">
+        <img src="https://travis-ci.org/Jord-JD/password_exposed.svg?branch=master" alt="Build Status" />
     </a>
     <a href="https://styleci.io/repos/119845896">
         <img src="https://styleci.io/repos/119845896/shield?branch=master" alt="StyleCI" />
     </a>
-    <a href="https://packagist.org/packages/divineomega/password_exposed/stats">
-        <img src="https://img.shields.io/packagist/dt/DivineOmega/password_exposed.svg" />
+    <a href="https://packagist.org/packages/jord-jd/password_exposed/stats">
+        <img src="https://img.shields.io/packagist/dt/jord-jd/password_exposed.svg" />
     </a>
 </p>
 
@@ -23,7 +23,7 @@ This PHP package provides a `password_exposed` helper function, that uses the ha
 The `password_exposed` package can be easily installed using Composer. Just run the following command from the root of your project.
 
 ```
-composer require "divineomega/password_exposed"
+composer require "jord-jd/password_exposed"
 ```
 
 If you have never used the Composer dependency manager before, head to the [Composer website](https://getcomposer.org/) for more information on how to get started.

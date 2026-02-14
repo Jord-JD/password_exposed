@@ -78,7 +78,7 @@ class PasswordExposedChecker extends AbstractPasswordExposedChecker
         $options = [
             'timeout' => 3,
             'headers' => [
-                'User_Agent' => 'password_exposed - https://github.com/DivineOmega/password_exposed',
+                'User_Agent' => 'password_exposed - https://github.com/Jord-JD/password_exposed',
             ],
         ];
 
