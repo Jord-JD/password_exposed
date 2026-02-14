@@ -1,9 +1,9 @@
 <?php
 
-namespace DivineOmega\PasswordExposed;
+namespace JordJD\PasswordExposed;
 
-use DivineOmega\PasswordExposed\Enums\PasswordStatus;
-use DivineOmega\PasswordExposed\Interfaces\PasswordExposedCheckerInterface;
+use JordJD\PasswordExposed\Enums\PasswordStatus;
+use JordJD\PasswordExposed\Interfaces\PasswordExposedCheckerInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;

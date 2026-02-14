@@ -1,9 +1,9 @@
 <?php
 
-namespace DivineOmega\PasswordExposed;
+namespace JordJD\PasswordExposed;
 
-use DivineOmega\DOFileCachePSR6\CacheItemPool;
-use DivineOmega\Psr18GuzzleAdapter\Client;
+use JordJD\DOFileCachePSR6\CacheItemPool;
+use JordJD\Psr18GuzzleAdapter\Client;
 use GuzzleHttp\Exception\ConnectException;
 use Http\Discovery\Psr17FactoryDiscovery;
 use ParagonIE\Certainty\Bundle;

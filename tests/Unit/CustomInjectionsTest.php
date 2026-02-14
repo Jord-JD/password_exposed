@@ -1,11 +1,11 @@
 <?php
 
-namespace DivineOmega\PasswordExposed\Tests;
+namespace JordJD\PasswordExposed\Tests;
 
 use Buzz\Client\FileGetContents;
-use DivineOmega\DOFileCachePSR6\CacheItemPool;
-use DivineOmega\PasswordExposed\Enums\PasswordStatus;
-use DivineOmega\PasswordExposed\PasswordExposedChecker;
+use JordJD\DOFileCachePSR6\CacheItemPool;
+use JordJD\PasswordExposed\Enums\PasswordStatus;
+use JordJD\PasswordExposed\PasswordExposedChecker;
 use Faker\Factory;
 use Http\Discovery\Psr17FactoryDiscovery;
 use ParagonIE\Certainty\Bundle;

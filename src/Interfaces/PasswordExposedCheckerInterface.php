@@ -1,6 +1,6 @@
 <?php
 
-namespace DivineOmega\PasswordExposed\Interfaces;
+namespace JordJD\PasswordExposed\Interfaces;
 
 /**
  * Interface PasswordExposedCheckerInterface.

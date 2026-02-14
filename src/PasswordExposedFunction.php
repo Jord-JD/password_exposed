@@ -1,6 +1,6 @@
 <?php
 
-use DivineOmega\PasswordExposed\PasswordExposedChecker;
+use JordJD\PasswordExposed\PasswordExposedChecker;
 
 /**
  * @param string $password

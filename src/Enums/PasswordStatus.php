@@ -1,8 +1,8 @@
 <?php
 
-namespace DivineOmega\PasswordExposed\Enums;
+namespace JordJD\PasswordExposed\Enums;
 
-use DivineOmega\PasswordExposed\Interfaces\PasswordExposedCheckerInterface;
+use JordJD\PasswordExposed\Interfaces\PasswordExposedCheckerInterface;
 
 /**
  * Class PasswordStatus.
