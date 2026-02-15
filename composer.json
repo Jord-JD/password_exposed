@@ -38,7 +38,7 @@
         "vimeo/psalm": "^4",
         "kriswallsmith/buzz": "^1.0",
         "symfony/cache": "^4.2.12",
-        "php-coveralls/php-coveralls": "^2.1"
+        "php-coveralls/php-coveralls": "^2.9"
     },
     "autoload": {
         "psr-4": {
