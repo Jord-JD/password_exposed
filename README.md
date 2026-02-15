@@ -13,9 +13,6 @@ This PHP package provides a `password_exposed` helper function, that uses the ha
     <a href="https://github.com/Jord-JD/password_exposed/actions/workflows/php-linter.yml">
         <img src="https://github.com/Jord-JD/password_exposed/actions/workflows/php-linter.yml/badge.svg?branch=master" alt="PHP syntax" />
     </a>
-    <a href="https://styleci.io/repos/119845896">
-        <img src="https://styleci.io/repos/119845896/shield?branch=master" alt="StyleCI" />
-    </a>
     <a href="https://packagist.org/packages/jord-jd/password_exposed/stats">
         <img src="https://img.shields.io/packagist/dt/jord-jd/password_exposed.svg" />
     </a>

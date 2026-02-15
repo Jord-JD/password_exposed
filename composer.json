@@ -37,8 +37,7 @@
         "fakerphp/faker": "^1.23",
         "vimeo/psalm": "^4",
         "kriswallsmith/buzz": "^1.0",
-        "symfony/cache": "^4.2.12",
-        "php-coveralls/php-coveralls": "^2.1"
+        "symfony/cache": "^4.2.12"
     },
     "autoload": {
         "psr-4": {
