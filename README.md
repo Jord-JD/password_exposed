@@ -18,6 +18,8 @@ This PHP package provides a `password_exposed` helper function, that uses the ha
     </a>
 </p>
 
+CI is run via GitHub Actions (unit tests, Psalm, and PHP syntax checks).
+
 ## Installation
 
 The `password_exposed` package can be easily installed using Composer. Just run the following command from the root of your project.
