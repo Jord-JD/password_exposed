@@ -141,10 +141,21 @@ abstract class AbstractPasswordExposedChecker implements PasswordExposedCheckerI
         $hash = strtoupper($hash);
         $hashSuffix = substr($hash, 5);
 
-        $lines = array_filter(explode("\r\n", $responseBody));
+        // Normalize line endings and guard against empty/whitespace-only lines.
+        // Some API responses may end with extra newline(s) or whitespace.
+        $lines = preg_split("/\r\n|\n|\r/", trim($responseBody));
 
         foreach ($lines as $line) {
-            list($exposedHashSuffix, $occurrences) = explode(':', $line);
+            if ($line === '') {
+                continue;
+            }
+
+            $colonPos = strpos($line, ':');
+            if ($colonPos === false) {
+                continue;
+            }
+
+            $exposedHashSuffix = substr($line, 0, $colonPos);
             if (hash_equals($hashSuffix, $exposedHashSuffix)) {
                 return PasswordStatus::EXPOSED;
             }

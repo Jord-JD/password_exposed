@@ -1,29 +1,29 @@
-name: PHP Linter
+name: PHP syntax
 
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
 
 jobs:
-  php-linter:
+  php-lint:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.draft == false
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
 
     steps:
-      - uses: actions/checkout@v4
-        with:
-          repository: ${{ github.event.client_payload.pull_request.head.repo.full_name }}
-          ref: ${{ github.event.client_payload.pull_request.head.ref }}
+      - name: Checkout
+        uses: actions/checkout@v4
 
       -   name: Setup PHP
           uses: shivammathur/setup-php@v2
           with:
-            php-version: 7.4
+            php-version: '8.3'
             coverage: none
-            tools: parallel-lint
 
-      -   name: Lint PHP
-          run: composer exec --no-interaction -- parallel-lint bin/ lib/ tests/
+      - name: Lint PHP
+        shell: bash
+        run: |
+          set -euo pipefail
+          find src tests -type f -name '*.php' -print0 | xargs -0 -r -n 1 -P 4 php -l

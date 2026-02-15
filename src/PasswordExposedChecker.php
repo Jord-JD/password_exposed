@@ -196,7 +196,7 @@ class PasswordExposedChecker extends AbstractPasswordExposedChecker
     {
         try {
             return $this->getBundleFromCertainty();
-        } catch (\Exception $exception) {
+        } catch (\Throwable $exception) {
             return null;
         }
     }
@@ -209,12 +209,20 @@ class PasswordExposedChecker extends AbstractPasswordExposedChecker
      */
     protected function getBundleFromCertainty(): Bundle
     {
-        $ourCertaintyDataDir = __DIR__.'/../bundles';
+        // Prefer a writable, shared runtime directory to avoid writing into vendor/.
+        $ourCertaintyDataDir = sys_get_temp_dir().'/password-exposed-certainty';
+        if (!is_dir($ourCertaintyDataDir)) {
+            @mkdir($ourCertaintyDataDir, 0777, true);
+        }
+
+        if (!is_readable($ourCertaintyDataDir)) {
+            $ourCertaintyDataDir = __DIR__.'/../bundles';
+        }
 
         if (!is_writable($ourCertaintyDataDir)) {
 
-            // If we can't write to the our Certainty data directory, just
-            // use the latest bundle from the Certainty package.
+            // If we can't write to the Certainty data directory, only use locally
+            // available bundles (no remote updates).
             return (new Fetch($ourCertaintyDataDir))->getLatestBundle();
         }
 
@@ -227,6 +235,13 @@ class PasswordExposedChecker extends AbstractPasswordExposedChecker
 
         // If the platform can run verification checks well enough, get
         // latest remote bundle and verify it.
+        $lockHandle = @fopen($ourCertaintyDataDir.'/.certainty.lock', 'c');
+        if (is_resource($lockHandle)) {
+            @flock($lockHandle, LOCK_EX);
+        } else {
+            $lockHandle = null;
+        }
+
         try {
             // Try the replication server first, since the upstream server
             // is under tremendous load.
@@ -239,6 +254,11 @@ class PasswordExposedChecker extends AbstractPasswordExposedChecker
         } catch (ConnectException $ex) {
             // Fallback to the main server.
             return (new RemoteFetch($ourCertaintyDataDir))->getLatestBundle();
+        } finally {
+            if (is_resource($lockHandle)) {
+                @flock($lockHandle, LOCK_UN);
+                @fclose($lockHandle);
+            }
         }
     }
 }

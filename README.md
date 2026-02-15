@@ -7,8 +7,11 @@ This PHP package provides a `password_exposed` helper function, that uses the ha
 </p>
 
 <p align="center">
-    <a href="https://travis-ci.org/Jord-JD/password_exposed">
-        <img src="https://travis-ci.org/Jord-JD/password_exposed.svg?branch=master" alt="Build Status" />
+    <a href="https://github.com/Jord-JD/password_exposed/actions/workflows/unit-tests.yml">
+        <img src="https://github.com/Jord-JD/password_exposed/actions/workflows/unit-tests.yml/badge.svg?branch=master" alt="Unit tests" />
+    </a>
+    <a href="https://github.com/Jord-JD/password_exposed/actions/workflows/php-linter.yml">
+        <img src="https://github.com/Jord-JD/password_exposed/actions/workflows/php-linter.yml/badge.svg?branch=master" alt="PHP syntax" />
     </a>
     <a href="https://styleci.io/repos/119845896">
         <img src="https://styleci.io/repos/119845896/shield?branch=master" alt="StyleCI" />
