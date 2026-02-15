@@ -1,0 +1,45 @@
+name: Unit tests
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+    phpunit:
+        runs-on: ${{ matrix.os }}
+
+        strategy:
+            matrix:
+                include:
+                    -   os: ubuntu-latest
+                        php-version: '7.4'
+                    -   os: ubuntu-latest
+                        php-version: '8.0'
+                    -   os: ubuntu-latest
+                        php-version: '8.1'
+                    -   os: ubuntu-latest
+                        php-version: '8.2'
+
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v4
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php-version }}
+                    coverage: none # disable xdebug, pcov
+
+            -   name: Composer install
+                uses: ramsey/composer-install@v3
+                with:
+                    composer-options: '--ansi --prefer-dist'
+
+            -   name: Setup Problem Matchers for PHPUnit
+                run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+            -   name: Run unit tests
+                run: vendor/bin/phpunit --colors=always

@@ -6,3 +6,4 @@ bundles/*
 !bundles/.
 
 .idea
+.phpunit.result.cache

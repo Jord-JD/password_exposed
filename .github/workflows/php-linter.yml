@@ -1,0 +1,29 @@
+name: PHP Linter
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  php-linter:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.client_payload.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.client_payload.pull_request.head.ref }}
+
+      -   name: Setup PHP
+          uses: shivammathur/setup-php@v2
+          with:
+            php-version: 7.4
+            coverage: none
+            tools: parallel-lint
+
+      -   name: Lint PHP
+          run: composer exec --no-interaction -- parallel-lint bin/ lib/ tests/
