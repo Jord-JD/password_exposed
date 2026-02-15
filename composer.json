@@ -27,7 +27,7 @@
         "psr/http-message-implementation": "^1.0",
         "psr/http-factory-implementation": "^1.0",
         "php-http/discovery": "^1.6",
-        "nyholm/psr7": "^1.0",
+        "nyholm/psr7": "^1.8",
         "paragonie/certainty": "^2.4",
         "jord-jd/do-file-cache-psr-6": "^3.0",
         "jord-jd/psr-18-guzzle-adapter": "^3.0"
