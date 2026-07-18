@@ -2,6 +2,8 @@
 
 This PHP package provides a `password_exposed` helper function, that uses the haveibeenpwned.com API to check if a password has been exposed in a data breach.
 
+It supports PHP 7.1 through current releases. On PHP 8 it can use the PSR-6 v4 cache adapter required by modern frameworks, while PHP 7 installations continue to resolve the compatible v3 adapter.
+
 <p align="center">
     <img src="assets/images/password-exposed.png">
 </p>

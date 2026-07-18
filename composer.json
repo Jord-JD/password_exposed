@@ -29,7 +29,7 @@
         "php-http/discovery": "^1.6",
         "nyholm/psr7": "^1.0",
         "paragonie/certainty": "^2.4",
-        "jord-jd/do-file-cache-psr-6": "^3.0",
+        "jord-jd/do-file-cache-psr-6": "^3.0 || ^4.0",
         "jord-jd/psr-18-guzzle-adapter": "^3.0"
     },
     "require-dev": {
@@ -57,7 +57,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "5.0-dev"
+            "dev-master": "5.1-dev"
         }
     },
     "minimum-stability": "dev",
