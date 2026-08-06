@@ -1,0 +1,135 @@
+name: Release v5.1.1 gate
+
+on:
+  pull_request:
+    branches:
+      - master
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  phpunit:
+    name: PHPUnit (PHP ${{ matrix.php-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['8.1', '8.2', '8.3', '8.4', '8.5']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: none
+
+      - name: Validate Composer metadata
+        run: composer validate --strict
+
+      - name: Composer install
+        uses: ramsey/composer-install@v4
+        with:
+          composer-options: '--ansi --prefer-dist'
+
+      - name: Run unit tests
+        run: vendor/bin/phpunit --colors=always
+
+  psalm:
+    name: Psalm
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+
+      - name: Composer install
+        uses: ramsey/composer-install@v4
+        with:
+          composer-options: '--ansi --prefer-dist'
+
+      - name: Run Psalm
+        run: vendor/bin/psalm
+
+  php-lint:
+    name: PHP syntax
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+
+      - name: Lint PHP
+        shell: bash
+        run: |
+          set -euo pipefail
+          find src tests -type f -name '*.php' -print0 | xargs -0 -r -n 1 -P 4 php -l
+
+  release:
+    name: Publish v5.1.1
+    needs: [phpunit, psalm, php-lint]
+    if: >-
+      github.head_ref == 'release/v5.1.1' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.base.sha == 'a4612b87b9908d2bdca1b42f8334fe7bebdfffd0'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Verify immutable release target
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: a4612b87b9908d2bdca1b42f8334fe7bebdfffd0
+          RELEASE_TAG: v5.1.1
+        shell: bash
+        run: |
+          set -euo pipefail
+          current_master="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/master" --jq '.object.sha')"
+          test "$current_master" = "$RELEASE_SHA"
+          if gh api "repos/${GITHUB_REPOSITORY}/git/ref/tags/${RELEASE_TAG}" >/dev/null 2>&1; then
+            echo "Tag ${RELEASE_TAG} already exists" >&2
+            exit 1
+          fi
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: a4612b87b9908d2bdca1b42f8334fe7bebdfffd0
+          RELEASE_TAG: v5.1.1
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh release create "$RELEASE_TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$RELEASE_SHA" \
+            --title "$RELEASE_TAG" \
+            --notes-file - <<'EOF'
+          Patch release covering dependency and CI compatibility maintenance.
+
+          - Require jord-jd/psr-18-guzzle-adapter 3.1 for standards-correct PSR-18 exception mapping while retaining PHP 7.1 and Guzzle 6 compatibility.
+          - Use Buzz 1.4 in development, including Symfony OptionsResolver 8 support and current PHP deprecation fixes.
+          - Update GitHub Actions workflows to actions/checkout v7.
+          EOF
+
+      - name: Remove temporary release branch
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method DELETE "repos/${GITHUB_REPOSITORY}/git/refs/heads/release/v5.1.1"
